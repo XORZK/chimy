@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include "avl.h"
 #include "bst.h"
 #include "vec.h"
 #include "mat.h"
@@ -48,7 +49,7 @@ int main(void) {
 
 	destroy_window(w);
 
-	destroy_polygon(p);*/
+	destroy_polygon(p);
 
 	list *l = init_list(sizeof(segment_v2), 10);
 
@@ -70,6 +71,18 @@ int main(void) {
 	bentley_ottmann(l);
 
 	destroy_list(l);
+
+	return 0;*/
+
+	int a = 1, b = 2, c = 3, d = 4, e = 5;
+
+	avl_tree* tree = init_avl_tree(sizeof(int), cmp);
+
+	avl_tree_insert(tree, &a);
+	avl_tree_insert(tree, &b);
+	avl_tree_insert(tree, &c);
+	avl_tree_insert(tree, &d);
+	avl_tree_insert(tree, &e);
 
 	return 0;
 }

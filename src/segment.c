@@ -46,6 +46,12 @@ void delete_segment_v3(segment_v3 *segment) {
 		free(segment);
 }
 
+double slope_v2(segment_v2 *s) {
+	if (!s)
+		return 0;
+
+	return (s->p2.y - s->p1.y) / (s->p2.x - s->p1.x);
+}
 
 // TODO
 // assume segments contains segment_v2 type
@@ -74,4 +80,67 @@ list* bentley_ottmann(list *segments) {
 	destroy_queue(q);
 
 	return (list*) NULL;
+}
+
+// assumes no two lines overlap
+// time complexity: O(n^2)
+list* brute_force_line_intersection(list *segments) {
+	int N = segments->length;
+	list* intersections = init_list(sizeof(v2), (N * (N-1)) / 2);
+
+	for (int j = 0; j < N; j++) {
+		for (int k = j+1; k < N; k++) {
+			// check POI between s1, s2
+			segment_v2 *s1 = (segment_v2*) get_element(segments, j),
+					   *s2 = (segment_v2*) get_element(segments, k);
+
+			// if s2.v2.x < s1.v1.x or s1.v2.x < s2.v1.x, continue
+			if (s2->p2.x < s1->p1.x || s1->p2.x < s2->p1.x) {
+				continue;
+			}
+
+			v2 p;
+
+			bool is_v1 = (s1->p1.x == s1->p2.x),
+				 is_v2 = (s2->p1.x == s2->p2.x);
+
+			// TODO: vertical lines
+			if (is_v1 && is_v2) continue;
+			else if (is_v1 || is_v2) {
+				// get point on s2 at s1.x
+				double m = slope_v2(is_v1 ? s2 : s1),
+					   b = (is_v1 ? s2->p1.y - m * s2->p1.x
+							      : s1->p1.y - m * s1->p1.x);
+
+				double x = (is_v1 ? s1->p1.x : s2->p1.x),
+					   y = m * x + b;
+				p.x = x;
+				p.y = y;
+			} else {
+				// slope, intercept
+				double m1 = slope_v2(s1),
+					   m2 = slope_v2(s2);
+
+				double b1 = s1->p1.y - m1 * s1->p1.x,
+					   b2 = s2->p1.y - m2 * s2->p1.x;
+
+				if (m1 == m2) { continue; } // parallel
+
+				// m1x + b1 = m2x + b2
+				// x = (b2-b1) / (m1-m2)
+				double px = (b2 - b1) / (m1 - m2),
+					   py = m1 * px + b1;
+
+				p.x = px;
+				p.y = py;
+			}
+
+			if (s1->p1.x <= p.x && p.x <= s1->p2.x &&
+			    s2->p1.x <= p.x && p.x <= s2->p2.x) {
+				push(intersections, &p);
+			}
+		}
+	}
+
+	return intersections;
 }

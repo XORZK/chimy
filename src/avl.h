@@ -11,11 +11,12 @@
 // BF(X) > 0: Right Heavy
 // BF(X) = 0: Balanced
 typedef struct avl_node {
-	char balance_factor;
 	void *data;
 	struct avl_node *left;
 	struct avl_node *right;
 	struct avl_node *parent;
+	int height;
+	char balance_factor;
 } avl_node;
 
 typedef struct {
@@ -36,9 +37,15 @@ void set_right(avl_node *parent, avl_node *child);
 
 void set_left(avl_node *parent, avl_node *child);
 
+void rotate(avl_node *a, avl_node *b, avl_node *c, int type);
+
 avl_node* create_avl_node(void *v, int tsize);
 
 avl_tree* init_avl_tree(int tsize, int (*comparator)(const void *, const void *));
+
+void update_avl_heights(avl_node *node);
+
+void update_node_heights(avl_node *node);
 
 void update_balance_factors(avl_node *node, char dh);
 
