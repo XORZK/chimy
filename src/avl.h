@@ -33,6 +33,8 @@ bool is_right_child(avl_node *node);
 
 bool is_left_child(avl_node *node);
 
+int avl_count_children(avl_node *node);
+
 void set_right(avl_node *parent, avl_node *child);
 
 void set_left(avl_node *parent, avl_node *child);
@@ -51,6 +53,9 @@ void update_balance_factors(avl_node *node, char dh);
 
 void avl_tree_insert(avl_tree *tree, void *data);
 
+void avl_tree_delete(avl_tree *tree, void *data);
+
 void destroy_avl_node(avl_node *node);
 
+void print_avl_tree(avl_node *node, void print(const void *));
 #endif

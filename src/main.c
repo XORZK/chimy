@@ -10,7 +10,7 @@
 #include "triangle.h"
 
 void prtf_int(const void *a) {
-	printf("%d ", *(int*) a);
+	printf("%d", *(int*) a);
 }
 
 int cmp(const void *a, const void *b) {
@@ -74,15 +74,51 @@ int main(void) {
 
 	return 0;*/
 
-	int a = 1, b = 2, c = 3, d = 4, e = 5;
+	int a = 1, b = 2, c = 3, d = 4, e = 5, f = 6;
 
 	avl_tree* tree = init_avl_tree(sizeof(int), cmp);
 
+	//   2
+	// 1   4
+	//    3 5
 	avl_tree_insert(tree, &a);
 	avl_tree_insert(tree, &b);
 	avl_tree_insert(tree, &c);
 	avl_tree_insert(tree, &d);
 	avl_tree_insert(tree, &e);
+
+
+	print_avl_tree(tree->root, prtf_int);
+
+	printf("\n");
+
+	avl_tree_delete(tree, &d);
+
+	//   2
+	// 1   3
+	//      5
+
+	print_avl_tree(tree->root, prtf_int);
+
+	avl_tree_delete(tree, &a);
+
+	printf("\n");
+
+	//   3
+	// 2   5
+	print_avl_tree(tree->root, prtf_int);
+
+	avl_tree_insert(tree, &f);
+
+	printf("\n");
+
+	print_avl_tree(tree->root, prtf_int);
+
+	avl_tree_delete(tree, &b);
+
+	printf("\n");
+
+	print_avl_tree(tree->root, prtf_int);
 
 	return 0;
 }

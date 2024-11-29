@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 void swap_avl_node_ptr(avl_node **p1, avl_node **p2) {
 	avl_node *tmp = *p1;
@@ -21,6 +22,13 @@ bool is_left_child(avl_node *node) {
 		return false;
 
 	return (node->parent->left == node);
+}
+
+int avl_count_children(avl_node *node) {
+	if (!node)
+		return 0;
+
+	return ((node->right != NULL) + (node->left != NULL));
 }
 
 void set_right(avl_node *parent, avl_node *child) {
@@ -89,9 +97,9 @@ avl_node* avl_rotate(avl_node *x, avl_node *y, avl_node *z, int type) {
 			set_left(parent, b);
 	}
 
-	update_node_heights(a);
-	update_node_heights(c);
-	update_node_heights(b);
+	update_avl_heights(a);
+	update_avl_heights(c);
+	update_avl_heights(b);
 
 	return b;
 }
@@ -220,13 +228,110 @@ void avl_tree_insert(avl_tree *tree, void *data) {
 			int type = determine_rotation_type(x, y, z);
 			avl_node *b = avl_rotate(x, y, z, type);
 
-			if (is_root) {
+			if (is_root)
 				tree->root = b;
-			}
+
+			//update_avl_heights(curr);
 		}
+
 	}
 
 	tree->size++;
+}
+
+void avl_tree_delete(avl_tree *tree, void *data) {
+	if (!tree)
+		return;
+
+	if (tree->size == 0)
+		return;
+
+	// standard bst insert
+	avl_node *curr = tree->root;
+
+	while (curr != NULL) {
+		int c = tree->cmp(curr->data, data);
+
+		if (c == 0) break;
+
+		if (c > 0) curr = curr->left;
+		else curr = curr->right;
+	}
+
+	if (!curr)
+		return;
+
+	int children = avl_count_children(curr);
+	bool R = is_right_child(curr);
+
+	avl_node *parent = curr->parent;
+
+	if (children == 0) {
+		if (R) parent->right = NULL;
+		else parent->left = NULL;
+
+		destroy_avl_node(curr);
+	} else if (children == 1) {
+		avl_node *child = (curr->right == NULL ? curr->left : curr->right);
+		child->parent = parent;
+
+		if (R) parent->right = child;
+		else parent->left = child;
+
+		destroy_avl_node(curr);
+	} else {
+		// predecessor
+		avl_node *pre = curr->left;
+		for (; pre->right != NULL; pre = pre->right);
+
+		// copy pre to curr and delete pre
+		void *dat = (void*) malloc(tree->type_size);
+		memcpy(dat, pre->data, tree->type_size);
+
+		// O(1)
+		bool right = is_right_child(pre);
+		int p_c = avl_count_children(pre);
+		parent = pre->parent;
+
+		if (right) {
+			parent->right = (p_c ? pre->left : NULL);
+		} else {
+			parent->left = (p_c ? pre->left : NULL);
+		}
+
+		if (p_c) { pre->left->parent = parent; }
+
+		destroy_avl_node(pre);
+
+		free(curr->data);
+		curr->data = dat;
+	}
+
+	// TODO: update heights of nodes
+	update_avl_heights(parent);
+	// rebalance after deletion
+	avl_node *y = parent, *z = parent;
+	for (; z != NULL && abs(z->balance_factor) < 2; z = z->parent)
+		y = z;
+
+	bool is_root = (z == tree->root);
+
+	if (z) {
+		y = (is_right_child(y) ? z->left : z->right);
+		avl_node *x;
+
+		// case (1):
+		if (y->left == NULL && y->right != NULL) x = y->right;
+		else if (y->left != NULL && y->right == NULL) x = y->left;
+		else if (y->left->height + 1 == y->height) x = y->left;
+		else if (y->right->height + 1 == y->height) x = y->right;
+
+		int type = determine_rotation_type(x, y, z);
+		avl_node *b = avl_rotate(x, y, z, type);
+
+		if (is_root)
+			tree->root = b;
+	}
 }
 
 void destroy_avl_node(avl_node *node) {
@@ -246,4 +351,16 @@ void destroy_avl_node(avl_node *node) {
 		free(node->data);
 
 	free(node);
+}
+
+void print_avl_tree(avl_node *node, void prtf(const void *)) {
+	if (!node)
+		return;
+
+	print_avl_tree(node->left, prtf);
+
+	prtf(node->data);
+	printf(": %d\n", node->height);
+
+	print_avl_tree(node->right, prtf);
 }

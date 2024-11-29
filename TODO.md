@@ -44,3 +44,4 @@
 - Generic list structure
 - Generic priority queue structure
 - Generic binary search tree structure
+- Generic AVL Tree structure
