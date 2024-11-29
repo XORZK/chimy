@@ -77,6 +77,7 @@ int main(void) {
 	int a = 1, b = 2, c = 3, d = 4, e = 5, f = 6;
 
 	avl_tree* tree = init_avl_tree(sizeof(int), cmp);
+	tree->prtf = prtf_int;
 
 	//   2
 	// 1   4
@@ -88,7 +89,7 @@ int main(void) {
 	avl_tree_insert(tree, &e);
 
 
-	print_avl_tree(tree->root, prtf_int);
+	inorder_print_avl_tree(tree);
 
 	printf("\n");
 
@@ -98,7 +99,7 @@ int main(void) {
 	// 1   3
 	//      5
 
-	print_avl_tree(tree->root, prtf_int);
+	inorder_print_avl_tree(tree);
 
 	avl_tree_delete(tree, &a);
 
@@ -106,19 +107,19 @@ int main(void) {
 
 	//   3
 	// 2   5
-	print_avl_tree(tree->root, prtf_int);
+	inorder_print_avl_tree(tree);
 
 	avl_tree_insert(tree, &f);
 
 	printf("\n");
 
-	print_avl_tree(tree->root, prtf_int);
+	inorder_print_avl_tree(tree);
 
 	avl_tree_delete(tree, &b);
 
 	printf("\n");
 
-	print_avl_tree(tree->root, prtf_int);
+	inorder_print_avl_tree(tree);
 
 	return 0;
 }

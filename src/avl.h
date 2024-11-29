@@ -25,6 +25,7 @@ typedef struct {
 	int size;
 	int height;
 	int (*cmp)(const void *, const void *);
+	void (*prtf)(const void *);
 } avl_tree;
 
 void swap_avl_node_ptr(avl_node **p1, avl_node **p2);
@@ -57,5 +58,7 @@ void avl_tree_delete(avl_tree *tree, void *data);
 
 void destroy_avl_node(avl_node *node);
 
-void print_avl_tree(avl_node *node, void print(const void *));
+void inorder_print_avl_node(avl_node *node, void print(const void *));
+
+void inorder_print_avl_tree(avl_tree *tree);
 #endif

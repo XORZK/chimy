@@ -55,6 +55,7 @@ double slope_v2(segment_v2 *s) {
 
 // TODO
 // assume segments contains segment_v2 type
+// https://en.wikipedia.org/wiki/Bentley–Ottmann_algorithm
 list* bentley_ottmann(list *segments) {
 	if (!segments)
 		return (list*) NULL;

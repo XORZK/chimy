@@ -353,14 +353,19 @@ void destroy_avl_node(avl_node *node) {
 	free(node);
 }
 
-void print_avl_tree(avl_node *node, void prtf(const void *)) {
+void inorder_print_avl_node(avl_node *node, void prtf(const void *)) {
 	if (!node)
 		return;
 
-	print_avl_tree(node->left, prtf);
+	inorder_print_avl_node(node->left, prtf);
 
 	prtf(node->data);
 	printf(": %d\n", node->height);
 
-	print_avl_tree(node->right, prtf);
+	inorder_print_avl_node(node->right, prtf);
+}
+
+void inorder_print_avl_tree(avl_tree *tree) {
+	if (tree->prtf)
+		inorder_print_avl_node(tree->root, tree->prtf);
 }
