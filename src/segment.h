@@ -27,6 +27,8 @@ void delete_segment_v3(segment_v3 *segment);
 
 double slope_v2(segment_v2 *s);
 
+double interp_v2(segment_v2 *s, double x);
+
 // Assumptions:
 // - No vertical segments
 // - No two segments intersect at their endpoints
@@ -37,7 +39,7 @@ double slope_v2(segment_v2 *s);
 // Traverse X in order (L -> R)
 // Do stuff
 
-// list* bentley_ottmann(polygon *p); --> list* bentley_ottmann(list *segments);
+// list* bentley_ottmann(polygon *p); --> list* bentley_ottmann(list *segments)
 list* bentley_ottmann(list *segments);
 
 list* brute_force_line_intersection(list *segments);

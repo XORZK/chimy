@@ -1,5 +1,5 @@
 OUT=chimy
-IN=src/vec.c src/mat.c src/window.c src/color.c src/triangle.c src/list.c src/polygon.c src/pair.c src/segment.c src/queue.c src/bst.c src/avl.c src/comparators.c src/main.c
+IN=src/vec.c src/mat.c src/window.c src/color.c src/triangle.c src/list.c src/polygon.c src/pair.c src/segment.c src/queue.c src/bst.c src/avl.c src/comparators.c src/tuple.c src/ll.c src/main.c
 LIB=-lSDL2
 
 default:

@@ -12,12 +12,12 @@
 // edges connecting vertices
 // edges: (v_j, v_k) connects vertex j to vertex k
 typedef struct {
-	bool is_v2; // dimension
 	int64_t vertex_count, edge_count;
+	v2 centroid;
 	list *vertices, *edges;
 } polygon;
 
-polygon* init_polygon(bool is_v2);
+polygon* init_polygon();
 
 void push_vertex(polygon *p, void* v);
 
@@ -25,7 +25,7 @@ void push_vertex(polygon *p, void* v);
 // j < k
 void add_edge(polygon *p, int j, int k);
 
-void* get_vertex(polygon *p, int idx);
+v2* get_vertex(polygon *p, int idx);
 
 pair get_edge(polygon *p, int idx);
 

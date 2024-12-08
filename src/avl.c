@@ -171,9 +171,9 @@ void update_balance_factors(avl_node *node, char dh) {
 	}
 }
 
-void avl_tree_insert(avl_tree *tree, void *data) {
+avl_node* avl_tree_insert(avl_tree *tree, void *data) {
 	if (!tree)
-		return;
+		return NULL;
 
 	avl_node *new_node = create_avl_node(data, tree->type_size);
 
@@ -233,10 +233,11 @@ void avl_tree_insert(avl_tree *tree, void *data) {
 
 			//update_avl_heights(curr);
 		}
-
 	}
 
 	tree->size++;
+
+	return new_node;
 }
 
 void avl_tree_delete(avl_tree *tree, void *data) {
@@ -257,6 +258,16 @@ void avl_tree_delete(avl_tree *tree, void *data) {
 		if (c > 0) curr = curr->left;
 		else curr = curr->right;
 	}
+
+	avl_tree_delete_node(tree, curr);
+}
+
+void avl_tree_delete_node(avl_tree *tree, avl_node *curr) {
+	if (!tree)
+		return;
+
+	if (tree->size == 0)
+		return;
 
 	if (!curr)
 		return;
@@ -332,6 +343,8 @@ void avl_tree_delete(avl_tree *tree, void *data) {
 		if (is_root)
 			tree->root = b;
 	}
+
+	tree->size--;
 }
 
 void destroy_avl_node(avl_node *node) {
@@ -368,4 +381,22 @@ void inorder_print_avl_node(avl_node *node, void prtf(const void *)) {
 void inorder_print_avl_tree(avl_tree *tree) {
 	if (tree->prtf)
 		inorder_print_avl_node(tree->root, tree->prtf);
+}
+
+void recursively_destroy_avl_nodes(avl_node *node) {
+	if (!node)
+		return;
+
+	recursively_destroy_avl_nodes(node->right);
+	recursively_destroy_avl_nodes(node->left);
+	destroy_avl_node(node);
+}
+
+void destroy_avl_tree(avl_tree *tree) {
+	if (!tree)
+		return;
+
+	recursively_destroy_avl_nodes(tree->root);
+
+	free(tree);
 }

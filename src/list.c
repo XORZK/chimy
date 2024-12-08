@@ -61,6 +61,16 @@ void destroy_list(list *l) {
 	free(l);
 }
 
+list* copy_list(list *l) {
+	list *c = init_list(l->type_size, l->length);
+
+	for (int j = 0; j < l->length; j++) {
+		push(c, get_element(l, j));
+	}
+
+	return c;
+}
+
 list* merge_lists(list *l1, list *l2, int (*cmp)(const void *, const void *)) {
 	int m = l1->length, n = l2->length;
 	list* merged = init_list(l1->type_size, m + n);
@@ -123,4 +133,22 @@ list* sort(list *l, int (*cmp)(const void *, const void *)) {
 	destroy_list(l2);
 
 	return s;
+}
+
+int binary_search(list *l, void *data, int (*cmp)(const void *, const void *)) {
+	int s = 0, e = l->length-1;
+
+	while (s <= e) {
+		int mid = (s + e) / 2;
+		int c = cmp(get_element(l, mid), data);
+
+		if (c == 0)
+			return mid;
+		else if (c > 0) // l[mid] > data
+			e = mid - 1;
+		else
+			s = mid + 1;
+	}
+
+	return -1;
 }

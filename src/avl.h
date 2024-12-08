@@ -52,13 +52,20 @@ void update_node_heights(avl_node *node);
 
 void update_balance_factors(avl_node *node, char dh);
 
-void avl_tree_insert(avl_tree *tree, void *data);
+avl_node* avl_tree_insert(avl_tree *tree, void *data);
 
 void avl_tree_delete(avl_tree *tree, void *data);
+
+void avl_tree_delete_node(avl_tree *tree, avl_node *node);
 
 void destroy_avl_node(avl_node *node);
 
 void inorder_print_avl_node(avl_node *node, void print(const void *));
 
 void inorder_print_avl_tree(avl_tree *tree);
+
+void recursively_destroy_avl_nodes(avl_node *node);
+
+void destroy_avl_tree(avl_tree *tree);
+
 #endif

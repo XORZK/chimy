@@ -1,9 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "avl.h"
 #include "segment.h"
 #include "queue.h"
 #include "comparators.h"
+#include "tuple.h"
+
+int sort_event_tree(const void *a, const void *b) {
+	double c1 = *(double*) (((tuple*) a)->b),
+		   c2 = *(double*) (((tuple*) b)->b);
+
+	return (c1 > c2) - (c1 < c2);
+}
 
 segment_v2* create_segment_v2(double x1, double y1, double x2, double y2) {
 	if (x1 > x2)
@@ -53,6 +62,15 @@ double slope_v2(segment_v2 *s) {
 	return (s->p2.y - s->p1.y) / (s->p2.x - s->p1.x);
 }
 
+// assumes s is not vertical
+double interp_v2(segment_v2 *s, double x) {
+	double m = slope_v2(s),
+		   b = s->p1.y - m * s->p1.x;
+
+	return m * x + b;
+}
+
+/**
 // TODO
 // assume segments contains segment_v2 type
 // https://en.wikipedia.org/wiki/Bentley–Ottmann_algorithm
@@ -60,28 +78,86 @@ list* bentley_ottmann(list *segments) {
 	if (!segments)
 		return (list*) NULL;
 
+	list* sorted_segments = sort(segments, sort_v2_by_x);
+
 	// event queue
 	// queue* q = init_queue(segments->type_size, segments->length, is_v2 ? sort_v2_by_x : sort_v3_by_x);
 	queue* q = init_queue(sizeof(v2), 2 * segments->length, sort_v2_by_x);
+	avl_tree* tree = init_avl_tree(sizeof(segment_v2) + sizeof(tuple), sort_event_tree);
 
-	for (int j = 0; j < segments->length; j++) {
-		segment_v2 s = *(segment_v2*) get_element(segments, j);
+	// initialization
+	for (int j = 0; j < sorted_segments->length; j++) {
+		segment_v2 s = *(segment_v2*) get_element(sorted_segments, j);
 		queue_insert(q, &s.p1);
 		queue_insert(q, &s.p2);
 	}
 
+	// main loop
 	while (!queue_is_empty(q)) {
-		// main loop
-		void *q_top = pop_min(q);
-		v2 p = *(v2*) q_top;
-		printf("(%f, %f)\n", p.x, p.y);
-		free(q_top);
+		void *top = pop_min(q);
+		v2 event = *(v2*) top;
+
+		// find associated segment
+		int first_idx = binary_search(sorted_segments, &event.x, search_first_x),
+			second_idx = binary_search(sorted_segments, &event.x, search_second_x);
+
+		// TODO: make avl tree hold pairs where second
+		//	     value in the pair is actually the crossing point at y
+		//	     and then sort by that crossing point
+
+		// left endpoint
+		if (second_idx == -1) {
+			segment_v2 s = *(segment_v2*) get_element(sorted_segments, first_idx);
+			double y = interp_v2(&s, event.x); // crossing point
+			tuple *t = create_tuple(&s, &y, sizeof(segment_v2), sizeof(double));
+			avl_node *inserted = avl_tree_insert(tree, t);
+			// find predecessor (T) and successor (R)
+			// T.y < y, R.y > y
+			avl_node *T = NULL, *R = NULL;
+
+			if (inserted->left != NULL) {
+				for (T = inserted->left; T != NULL; T = T->right);
+			} else {
+				// largest ancestor of node smaller than node
+				// node is a right child of ancestor
+				avl_node *curr = inserted;
+
+				while (curr != NULL) {
+					if (T == NULL || (sort_event_tree(curr->data, inserted->data) < 0 && sort_event_tree(curr->data, T->data) > 0))
+						T = curr;
+					curr = curr->parent;
+				}
+			}
+
+			if (inserted->right != NULL) {
+				for (R = inserted->right; R != NULL; R = R->left);
+			} else {
+				// smallest ancestor of node greater than node
+				avl_node *curr = inserted;
+
+				while (curr != NULL) {
+					// curr->data > inserted->data
+					// curr->data < R->data
+					if (R == NULL || (sort_event_tree(curr->data, inserted->data) > 0 && sort_event_tree(curr->data, R->data) < 0))
+						R = curr;
+					curr = curr->parent;
+				}
+			}
+
+			destroy_tuple(t);
+		} else {
+			segment_v2 s = *(segment_v2*) get_element(sorted_segments, second_idx);
+		}
+
+		free(top);
 	}
 
+	destroy_list(sorted_segments);
 	destroy_queue(q);
+	destroy_avl_tree(tree);
 
 	return (list*) NULL;
-}
+}*/
 
 // assumes no two lines overlap
 // time complexity: O(n^2)

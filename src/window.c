@@ -257,11 +257,6 @@ void draw_wireframe_polygon(window *w, polygon *p) {
 		void *vt1 = get_vertex(p, E.first),
 			 *vt2 = get_vertex(p, E.second);
 
-		if (p->is_v2) {
-			draw_line_v2(w, *((v2*) vt1), *((v2*) vt2));
-		} else {
-			// TODO:
-			// draw_line_v3(w, *((v3*) vt1), *((v3*) vt2));
-		}
+		draw_line_v2(w, *((v2*) vt1), *((v2*) vt2));
 	}
 }
