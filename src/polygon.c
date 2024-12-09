@@ -67,6 +67,9 @@ pair get_edge(polygon *p, int idx) {
 // https://en.wikipedia.org/wiki/Polygon_triangulation
 // Assume p is simple
 list* ear_clipping(polygon *p) {
+	if (p->vertex_count <= 2)
+		return NULL;
+
 	list *tf = init_list(sizeof(v2), p->vertex_count);
 	list *triangles = init_list(sizeof(triangle), p->vertex_count - 2);
 

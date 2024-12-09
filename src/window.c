@@ -49,6 +49,7 @@ void destroy_window(window *w) {
 	if (w->window)
 		SDL_DestroyWindow(w->window);
 
+	delete_color(w->bg_color);
 	delete_color(w->color);
 
 	free(w);
@@ -62,6 +63,25 @@ void tick(window *w) {
 		if (event.type == SDL_QUIT) {
 			w->quit = true;
 		}
+	}
+}
+
+void set_bg_color(window *w, int r, int g, int b) {
+	assert(w);
+
+	if (w->bg_color)
+		free(w->bg_color);
+
+	w->bg_color = create_color(r, g, b, 0xFF);
+}
+
+void draw_bg(window *w) {
+	if (w->bg_color) {
+		SDL_SetRenderDrawColor(w->renderer, w->bg_color->R, w->bg_color->G, w->bg_color->B, w->bg_color->A);
+		SDL_RenderClear(w->renderer);
+
+		if (w->color)
+			SDL_SetRenderDrawColor(w->renderer, w->color->R, w->color->G, w->color->B, w->color->A);
 	}
 }
 

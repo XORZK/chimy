@@ -16,7 +16,7 @@ typedef struct {
 	int width, height;
 	int delay;
 	bool quit;
-	color *color;
+	color *color, *bg_color;
 	const char* title;
 } window;
 
@@ -25,6 +25,10 @@ window* init_window(const char* title, int width, int height);
 void destroy_window(window *w);
 
 void tick(window *w);
+
+void draw_bg(window *w);
+
+void set_bg_color(window *w, int r, int g, int b);
 
 void output_screen(window *w);
 
