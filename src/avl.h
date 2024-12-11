@@ -52,6 +52,8 @@ void update_node_heights(avl_node *node);
 
 void update_balance_factors(avl_node *node, char dh);
 
+avl_node* avl_search(avl_tree *tree, void *data);
+
 avl_node* avl_tree_insert(avl_tree *tree, void *data);
 
 void avl_tree_delete(avl_tree *tree, void *data);

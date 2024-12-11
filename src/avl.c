@@ -171,6 +171,26 @@ void update_balance_factors(avl_node *node, char dh) {
 	}
 }
 
+avl_node* avl_search(avl_tree *tree, void *data) {
+	if (!tree)
+		return NULL;
+
+	avl_node *curr = tree->root;
+
+	while (curr != NULL) {
+		int c = tree->cmp(curr->data, data);
+
+		if (c == 0)
+			return curr;
+		else if (c > 0)
+			curr = curr->left;
+		else
+			curr = curr->right;
+	}
+
+	return curr;
+}
+
 avl_node* avl_tree_insert(avl_tree *tree, void *data) {
 	if (!tree)
 		return NULL;

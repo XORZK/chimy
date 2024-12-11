@@ -223,3 +223,8 @@ void swap_v2(v2 *a, v2 *b) {
 	*a = *b;
 	*b = tmp;
 }
+
+double dist_v2(v2 *a, v2 *b) {
+	return sqrt((a->x - b->x) * (a->x - b->x) +
+				(a->y - b->y) * (a->y - b->y));
+}

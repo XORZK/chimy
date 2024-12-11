@@ -24,6 +24,8 @@ ll_node* create_ll_node(void *d, int ds);
 
 ll* init_ll(int ds);
 
+ll_node *pop_front(ll *list);
+
 void ll_push(ll* list, void *d);
 
 void ll_pop_by_idx(ll *list, int idx);

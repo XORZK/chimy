@@ -1,11 +1,32 @@
 #include <SDL2/SDL.h>
-#include "window.h"
+#include "avl.h"
+#include "comparators.h"
+#include "ll.h"
 #include "polygon.h"
+#include "window.h"
+
+void draw_point(window *w, avl_node *node) {
+	if (!node)
+		return;
+
+	if (!w)
+		return;
+
+	v2 p = *(v2*) node->data;
+	draw_filled_circle_v2(w, p, 10);
+
+	if (node->right != NULL)
+		draw_point(w, node->right);
+
+	if (node->left != NULL)
+		draw_point(w, node->left);
+}
 
 int main(void) {
 	window *w = init_window("heron", 500, 500);
 	polygon *poly = init_polygon(true);
-	list *points = init_list(sizeof(v2), 10);
+	avl_tree *points = init_avl_tree(sizeof(v2), sort_v2_by_x);
+	avl_node *recent = NULL;
 
 	SDL_Event e;
 
@@ -22,17 +43,19 @@ int main(void) {
 			}
 
 			if (e.type == SDL_MOUSEBUTTONDOWN) {
+				// make drag functionality
+				// can rearrange vertices of a polygon
 				int x, y;
 				SDL_GetMouseState(&x, &y);
 				v2 p = { x, y };
 				push_vertex(poly, &p);
-				push(points, &p);
+				recent = avl_tree_insert(points, &p);
 			} else if (e.type == SDL_KEYDOWN) {
 				switch (e.key.keysym.sym) {
-					case (SDLK_ESCAPE):
-						delete(points, points->length-1);
+					case (27): // esc
+						avl_tree_delete_node(points, recent);
 						break;
-					case (SDLK_SPACE):
+					case (13): // enter
 						if (vis)
 							vis = false;
 						else if (!vis && poly->vertex_count >= 3)
@@ -42,10 +65,7 @@ int main(void) {
 			}
 		}
 
-		for (int j = 0; j < points->length; j++) {
-			v2 p = *(v2*) get_element(points, j);
-			draw_filled_circle_v2(w, p, 5);
-		}
+		draw_point(w, points->root);
 
 		if (vis) {
 			list *triangles = ear_clipping(poly);
@@ -61,7 +81,7 @@ int main(void) {
 		output_screen(w);
 	}
 
-	destroy_list(points);
+	destroy_avl_tree(points);
 	destroy_polygon(poly);
 	destroy_window(w);
 }

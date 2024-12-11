@@ -43,4 +43,6 @@ void print_v(void *v, size_t a);
 
 void swap_v2(v2 *a, v2 *b);
 
+double dist_v2(v2 *a, v2 *b);
+
 #endif
