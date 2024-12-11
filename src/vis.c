@@ -30,6 +30,12 @@ void add_to_poly(polygon *poly, avl_node *node) {
 	if (node->left) add_to_poly(poly, node->left);
 }
 
+void reset_poly(polygon **p, avl_tree *points) {
+	destroy_polygon(*p);
+	*p = init_polygon(true);
+	add_to_poly(*p, points->root);
+}
+
 void draw_point(window *w, avl_node *node) {
 	if (!node) return;
 
@@ -68,9 +74,7 @@ int main(void) {
 				v2 p = { x, y };
 				if (dragging) {
 					if (hover) memcpy(hover->data, &p, sizeof(v2));
-					destroy_polygon(poly);
-					poly = init_polygon(true);
-					add_to_poly(poly, points->root);
+					reset_poly(&poly, points);
 				} else {
 					avl_node *node = search_prox(&p, points->root, 20);
 
@@ -96,15 +100,11 @@ int main(void) {
 					dragging = true;
 				} else {
 					recent = avl_tree_insert(points, &p);
-					destroy_polygon(poly);
-					poly = init_polygon(true);
-					add_to_poly(poly, points->root);
+					reset_poly(&poly, points);
 				}
 			} else if (e.type == SDL_MOUSEBUTTONUP) {
 				dragging = false;
-				destroy_polygon(poly);
-				poly = init_polygon(true);
-				add_to_poly(poly, points->root);
+				reset_poly(&poly, points);
 			} else if (e.type == SDL_KEYDOWN) {
 				switch (e.key.keysym.sym) {
 					case (27): // esc
