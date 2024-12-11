@@ -261,6 +261,9 @@ avl_node* avl_tree_insert(avl_tree *tree, void *data) {
 }
 
 void avl_tree_delete(avl_tree *tree, void *data) {
+	if (!data)
+		return;
+
 	if (!tree)
 		return;
 
@@ -296,6 +299,12 @@ void avl_tree_delete_node(avl_tree *tree, avl_node *curr) {
 	bool R = is_right_child(curr);
 
 	avl_node *parent = curr->parent;
+
+	if (curr == tree->root && tree->size == 1) {
+		tree->root = NULL;
+		tree->size--;
+		return;
+	}
 
 	if (children == 0) {
 		if (R) parent->right = NULL;

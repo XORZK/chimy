@@ -3,7 +3,7 @@
 - Convex Hull
 	- Polygon is complex or not --> intersection of segments using Bentley-Ottmann?
 		- Requires Priority Queue (HEAP) [ DONE ] and BST [ DONE ]
-- Polygon Triangulation
+- Polygon Triangulation [ DONE ]
 - Bezier Curves
 - Vertex Transformations:
 	- Translation, Rotation, Scaling
@@ -14,6 +14,7 @@
 - Triangle Rasterization
 	- Bounding Box Optimization?
 - Barycentric Coordinates
+- k-d tree
 - Depth Interpolation (Z-Buffer)
 - Normal Interpolation for Shading
 - Shading and Lighting Models
@@ -45,3 +46,5 @@
 - Generic priority queue structure
 - Generic binary search tree structure
 - Generic AVL Tree structure
+- Simple O(n^2) polygon triangulation
+	- Working on a visualizer
