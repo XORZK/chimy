@@ -120,6 +120,12 @@ int main(void) {
 							}
 						}
 						break;
+					case (8):
+						if (hover) {
+							avl_tree_delete_node(points, hover);
+							hover = NULL;
+						}
+						break;
 				}
 			}
 		}
