@@ -110,6 +110,7 @@ int main(void) {
 					case (27): // esc
 						avl_tree_delete_node(points, recent);
 						recent = NULL;
+						reset_poly(&poly, points);
 						break;
 					case (13): // enter
 						if (vis) {
@@ -126,6 +127,7 @@ int main(void) {
 								recent = NULL;
 							avl_tree_delete_node(points, hover);
 							hover = NULL;
+							reset_poly(&poly, points);
 						}
 						break;
 				}
