@@ -5,6 +5,26 @@
 #include "polygon.h"
 #include "window.h"
 
+avl_node* search_prox(v2 *p, avl_node *node, double prox) {
+	if (!p)
+		return NULL;
+
+	if (!node)
+		return NULL;
+
+	if (dist_v2((v2*) node->data, p) < prox)
+		return node;
+
+	avl_node *left = search_prox(p, node->left, prox),
+			 *right = search_prox(p, node->right, prox);
+
+	if (left != NULL) return left;
+
+	if (right != NULL) return right;
+
+	return NULL;
+}
+
 void add_to_poly(polygon *poly, avl_node *node) {
 	if (!node)
 		return;
@@ -62,7 +82,7 @@ int main(void) {
 			if (e.type == SDL_MOUSEMOTION) {
 				SDL_GetMouseState(&x, &y);
 				v2 p = { x, y };
-				avl_node *node = avl_search(points, &p);
+				avl_node *node = search_prox(&p, points->root, 20);
 
 				if (node) {
 					hover = node;
