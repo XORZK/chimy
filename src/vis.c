@@ -122,6 +122,8 @@ int main(void) {
 						break;
 					case (8):
 						if (hover) {
+							if (recent == hover)
+								recent = NULL;
 							avl_tree_delete_node(points, hover);
 							hover = NULL;
 						}
@@ -131,12 +133,6 @@ int main(void) {
 		}
 
 		draw_point(w, points->root);
-
-		if (hover) {
-			set_color(w, 0, 0xFF, 0);
-			draw_filled_circle_v2(w, *(v2*) hover->data, 10);
-			set_color(w, 0xFF, 0, 0);
-		}
 
 		if (vis) {
 			list *triangles = ear_clipping(poly);
@@ -148,6 +144,13 @@ int main(void) {
 
 			destroy_list(triangles);
 		}
+
+		if (hover) {
+			set_color(w, 0, 0xFF, 0);
+			draw_filled_circle_v2(w, *(v2*) hover->data, 10);
+			set_color(w, 0xFF, 0, 0);
+		}
+
 
 		output_screen(w);
 	}
