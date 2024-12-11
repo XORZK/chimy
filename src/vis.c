@@ -68,6 +68,9 @@ int main(void) {
 				v2 p = { x, y };
 				if (dragging) {
 					if (hover) memcpy(hover->data, &p, sizeof(v2));
+					destroy_polygon(poly);
+					poly = init_polygon(true);
+					add_to_poly(poly, points->root);
 				} else {
 					avl_node *node = search_prox(&p, points->root, 20);
 
@@ -79,6 +82,8 @@ int main(void) {
 						if (dist_v2((v2*) hover->data, &p) > 20) {
 							hover = NULL;
 						}
+					} else {
+						dragging = false;
 					}
 				}
 			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
@@ -91,9 +96,15 @@ int main(void) {
 					dragging = true;
 				} else {
 					recent = avl_tree_insert(points, &p);
+					destroy_polygon(poly);
+					poly = init_polygon(true);
+					add_to_poly(poly, points->root);
 				}
 			} else if (e.type == SDL_MOUSEBUTTONUP) {
 				dragging = false;
+				destroy_polygon(poly);
+				poly = init_polygon(true);
+				add_to_poly(poly, points->root);
 			} else if (e.type == SDL_KEYDOWN) {
 				switch (e.key.keysym.sym) {
 					case (27): // esc
@@ -103,12 +114,9 @@ int main(void) {
 					case (13): // enter
 						if (vis) {
 							vis = false;
-							destroy_polygon(poly);
-							poly = init_polygon(true);
 						} else {
 							if (points->size >= 3) {
 								vis = true;
-								add_to_poly(poly, points->root);
 							}
 						}
 						break;
