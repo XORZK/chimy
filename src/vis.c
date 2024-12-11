@@ -6,56 +6,40 @@
 #include "window.h"
 
 avl_node* search_prox(v2 *p, avl_node *node, double prox) {
-	if (!p)
-		return NULL;
+	if (!p) return NULL;
+	if (!node) return NULL;
 
-	if (!node)
-		return NULL;
-
-	if (dist_v2((v2*) node->data, p) < prox)
-		return node;
+	if (dist_v2((v2*) node->data, p) < prox) return node;
 
 	avl_node *left = search_prox(p, node->left, prox),
 			 *right = search_prox(p, node->right, prox);
 
 	if (left != NULL) return left;
-
 	if (right != NULL) return right;
 
 	return NULL;
 }
 
 void add_to_poly(polygon *poly, avl_node *node) {
-	if (!node)
-		return;
-
-	if (!poly)
-		return;
+	if (!node) return;
+	if (!poly) return;
 
 	push_vertex(poly, (v2*) node->data);
 
-	if (node->right)
-		add_to_poly(poly, node->right);
-
-	if (node->left)
-		add_to_poly(poly, node->left);
+	if (node->right) add_to_poly(poly, node->right);
+	if (node->left) add_to_poly(poly, node->left);
 }
 
 void draw_point(window *w, avl_node *node) {
-	if (!node)
-		return;
+	if (!node) return;
 
-	if (!w)
-		return;
+	if (!w) return;
 
 	v2 p = *(v2*) node->data;
 	draw_filled_circle_v2(w, p, 10);
 
-	if (node->right != NULL)
-		draw_point(w, node->right);
-
-	if (node->left != NULL)
-		draw_point(w, node->left);
+	if (node->right != NULL) draw_point(w, node->right);
+	if (node->left != NULL) draw_point(w, node->left);
 }
 
 int main(void) {
@@ -82,17 +66,19 @@ int main(void) {
 			if (e.type == SDL_MOUSEMOTION) {
 				SDL_GetMouseState(&x, &y);
 				v2 p = { x, y };
-				avl_node *node = search_prox(&p, points->root, 20);
+				if (dragging) {
+					if (hover) memcpy(hover->data, &p, sizeof(v2));
+				} else {
+					avl_node *node = search_prox(&p, points->root, 20);
 
-				if (node) {
-					hover = node;
-				}
+					if (node) {
+						hover = node;
+					}
 
-				if (hover) {
-					if (dist_v2((v2*) hover->data, &p) > 20) {
-						hover = NULL;
-					} else if (dragging) {
-						memcpy(hover->data, &p, sizeof(v2));
+					if (hover) {
+						if (dist_v2((v2*) hover->data, &p) > 20) {
+							hover = NULL;
+						}
 					}
 				}
 			} else if (e.type == SDL_MOUSEBUTTONDOWN) {
