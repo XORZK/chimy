@@ -18,12 +18,27 @@ int main(void) {
 
 	mesh *m = init_mesh("./obj/isohedron.obj");
 
+	const Uint8 *state = SDL_GetKeyboardState(NULL);
+
+	double delta = 0.05;
+
 	while (!w->quit) {
 		draw_bg(w);
 
 		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT)
 				w->quit = true;
+
+			if (e.type == SDL_KEYDOWN) {
+				switch (e.key.keysym.sym) {
+					case (SDLK_w): { shift_pos(w->camera, 0, 0, -delta); break; }
+					case (SDLK_s): { shift_pos(w->camera, 0, 0, +delta); break; }
+					case (SDLK_d): { shift_pos(w->camera, +delta, 0, 0); break; }
+					case (SDLK_a): { shift_pos(w->camera, -delta, 0, 0); break; }
+					case (SDLK_SPACE): { shift_pos(w->camera, 0, state[SDL_SCANCODE_LSHIFT] ? -delta : +delta, 0); break; }
+					default: break;
+				}
+			}
 		}
 
 		draw_mesh(w, m);

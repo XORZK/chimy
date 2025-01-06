@@ -17,6 +17,9 @@ cam* create_camera(double fov, double ratio, double n, double f) {
 	c->b = -c->t;
 	c->r = ratio * scale;
 	c->l = -c->r;
+	c->pos.x = 0;
+	c->pos.y = 0;
+	c->pos.z = 1;
 
 	return c;
 }
@@ -49,6 +52,15 @@ v3 get_ndc_coord(v4 p) {
 	}
 
 	return pp;
+}
+
+void shift_pos(cam *c, double dx, double dy, double dz) {
+	if (!c)
+		return;
+
+	c->pos.x += dx;
+	c->pos.y += dy;
+	c->pos.z += dz;
 }
 
 void destroy_camera(cam *c) {

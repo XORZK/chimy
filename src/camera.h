@@ -10,6 +10,7 @@
 #define DEFAULT_FAR_DIST 100
 
 typedef struct cam {
+	v3 pos;
 	double px, py, pz;
 	double fov, ratio;
 	double n, f, b, t, l, r;
@@ -20,6 +21,8 @@ cam* create_camera(double fov, double ratio, double n, double f);
 v4 project(v3 p, cam *c);
 
 v3 get_ndc_coord(v4 p);
+
+void shift_pos(cam *c, double dx, double dy, double dz);
 
 void destroy_camera(cam *c);
 

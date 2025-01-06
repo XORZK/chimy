@@ -467,14 +467,14 @@ void draw_mesh(window *w, mesh *m) {
 
 	for (int j = 0; j < m->F->length; j++) {
 		v3i f = *(v3i*) get_element(m->F, j);
-		v3 p1 = *(v3*) get_element(m->V, f.x1),
-		   p2 = *(v3*) get_element(m->V, f.x2),
-		   p3 = *(v3*) get_element(m->V, f.x3);
+		v3 *p1 = (v3*) sub_v(get_element(m->V, f.x1), &w->camera->pos, 3),
+		   *p2 = (v3*) sub_v(get_element(m->V, f.x2), &w->camera->pos, 3),
+		   *p3 = (v3*) sub_v(get_element(m->V, f.x3), &w->camera->pos, 3);
 
-		p1.z -= 2.5;
-		p2.z -= 2.5;
-		p3.z -= 2.5;
+		draw_wireframe_triangle_v3(w, *p1, *p2, *p3);
 
-		draw_wireframe_triangle_v3(w, p1, p2, p3);
+		free(p1);
+		free(p2);
+		free(p3);
 	}
 }

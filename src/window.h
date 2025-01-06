@@ -6,8 +6,8 @@
 #include "camera.h"
 #include "color.h"
 #include "triangle.h"
-#include "polygon.h"
 #include "mesh.h"
+#include "polygon.h"
 #include "vec.h"
 
 #define RENDERER_DELAY 15
