@@ -1,9 +1,9 @@
 #include <SDL2/SDL.h>
-#include "avl.h"
-#include "comparators.h"
-#include "ll.h"
-#include "polygon.h"
-#include "window.h"
+#include "../src/avl.h"
+#include "../src/comparators.h"
+#include "../src/ll.h"
+#include "../src/polygon.h"
+#include "../src/window.h"
 
 avl_node* search_prox(v2 *p, avl_node *node, double prox) {
 	if (!p) return NULL;

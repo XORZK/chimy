@@ -14,6 +14,8 @@ typedef struct {
 
 list* init_list(int tsize, int c);
 
+void set_l(list *l, int idx, void *v);
+
 void push(list *l, void *v);
 
 void delete(list *l, int idx);

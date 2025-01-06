@@ -32,6 +32,16 @@ v4* create_v4(double x1, double x2, double x3, double x4) {
 	return v;
 }
 
+v3i* create_v3_int(int x, int y, int z) {
+	v3i* v = (v3i*) malloc(sizeof(v3i));
+
+	v->x1 = x;
+	v->x2 = y;
+	v->x3 = z;
+
+	return v;
+}
+
 void* add_v(void *a1, void *a2, size_t s) {
 	switch (s) {
 		case (2): {

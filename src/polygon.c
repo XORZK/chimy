@@ -152,6 +152,28 @@ void destroy_polygon(polygon *p) {
 	free(p);
 }
 
+list* sort_ccw_v2(list *points, v2 center) {
+	list *tf = init_list(sizeof(v2), points->length);
+
+	for (int j = 0; j < points->length; j++) {
+		v2 *p = (v2*) sub_v(get_element(points, j), &center, 2);
+		push(tf, p);
+		free(p);
+	}
+
+	list *s = sort(tf, cmp_ccw_v2);
+
+	for (int j = 0; j < points->length; j++) {
+		v2 *p = (v2*) add_v(get_element(s, j), &center, 2);
+		set_l(tf, j, p);
+		free(p);
+	}
+
+	destroy_list(s);
+
+	return tf;
+}
+
 list* get_segments(polygon *p) {
 	if (!p) {
 		return (list*) (NULL);

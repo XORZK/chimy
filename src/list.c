@@ -16,6 +16,16 @@ list* init_list(int tsize, int c) {
 	return l;
 }
 
+void set_l(list *l, int idx, void *v) {
+	if (!l)
+		return;
+
+	if (idx < 0 || idx >= l->length)
+		return;
+
+	memcpy(l->data + idx * l->type_size, v, l->type_size);
+}
+
 void push(list *l, void *v) {
 	if (!l || !v)
 		return;

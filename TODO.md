@@ -4,6 +4,9 @@
 	- Polygon is complex or not --> intersection of segments using Bentley-Ottmann?
 		- Requires Priority Queue (HEAP) [ DONE ] and BST [ DONE ]
 - Polygon Triangulation [ DONE ]
+	- Very simple
+	- Visualization program could use some work
+- Perspective Projection
 - Bezier Curves
 - Vertex Transformations:
 	- Translation, Rotation, Scaling

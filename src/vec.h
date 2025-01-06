@@ -17,11 +17,17 @@ typedef struct {
 	double x1, x2, x3, x4;
 } v4;
 
+typedef struct {
+	int x1, x2, x3;
+} v3i;
+
 v2* create_v2(double x, double y);
 
 v3* create_v3(double x, double y, double z);
 
 v4* create_v4(double x1, double x2, double x3, double x4);
+
+v3i* create_v3i(int x, int y, int z);
 
 void* add_v(void *a1, void *a2, size_t size);
 

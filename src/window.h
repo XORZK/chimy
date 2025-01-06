@@ -3,9 +3,11 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <stdbool.h>
+#include "camera.h"
 #include "color.h"
 #include "triangle.h"
 #include "polygon.h"
+#include "mesh.h"
 #include "vec.h"
 
 #define RENDERER_DELAY 15
@@ -18,9 +20,14 @@ typedef struct {
 	bool quit;
 	color *color, *bg_color;
 	const char* title;
+	cam *camera;
 } window;
 
 window* init_window(const char* title, int width, int height);
+
+void init_default_camera(window *w);
+
+void init_camera(window *w, double fov, double n, double f);
 
 void destroy_window(window *w);
 
@@ -59,5 +66,29 @@ void draw_wireframe_square_v2(window *w, v2 v, int length);
 void draw_filled_square_v2(window *w, v2 v, int length);
 
 void draw_wireframe_polygon(window *w, polygon *p);
+
+v2 ndc_to_screen(window *w, v3 p);
+
+void draw_point_v3(window *w, v3 v);
+
+void draw_line_v3(window *w, v3 a, v3 b);
+
+void draw_wireframe_circle_v3(window *w, v3 center, double r);
+
+void draw_filled_circle_v3(window *w, v3 center, double r);
+
+void draw_wireframe_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3);
+
+void draw_filled_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3);
+
+void draw_wireframe_rectangle_v3(window *wd, v3 v, int w, int h);
+
+void draw_filled_rectangle_v3(window *wd, v3 v, int w, int h);
+
+void draw_wireframe_square_v3(window *w, v3 v, int l);
+
+void draw_filled_square_v3(window *w, v3 v, int l);
+
+void draw_mesh(window *w, mesh *m);
 
 #endif

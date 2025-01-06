@@ -4,6 +4,12 @@
 #include "pair.h"
 #include "window.h"
 
+v2 ndc_to_screen(window *w, v3 p) {
+	v2 pp = { w->width * (p.x + 1) * 0.5, w->height * (p.y + 1) * 0.5 };
+
+	return pp;
+}
+
 window* init_window(const char* title, int width, int height) {
 	window* w = (window*) malloc(sizeof(window));
 
@@ -35,8 +41,20 @@ window* init_window(const char* title, int width, int height) {
 	w->title = title;
 	w->quit = false;
 	w->delay = RENDERER_DELAY;
+	init_default_camera(w);
 
 	return w;
+}
+
+void init_default_camera(window *w) {
+	init_camera(w, DEFAULT_CAMERA_FOV, DEFAULT_NEAR_DIST, DEFAULT_FAR_DIST);
+}
+
+void init_camera(window *w, double fov, double n, double f) {
+	if (!w)
+		return;
+
+	w->camera = create_camera(fov, ((float) w->width) / w->height, n, f);
 }
 
 void destroy_window(window *w) {
@@ -51,6 +69,8 @@ void destroy_window(window *w) {
 
 	delete_color(w->bg_color);
 	delete_color(w->color);
+
+	destroy_camera(w->camera);
 
 	free(w);
 	SDL_Quit();
@@ -278,5 +298,183 @@ void draw_wireframe_polygon(window *w, polygon *p) {
 			 *vt2 = get_vertex(p, E.second);
 
 		draw_line_v2(w, *((v2*) vt1), *((v2*) vt2));
+	}
+}
+
+void draw_point_v3(window *w, v3 v) {
+	if (!w)
+		return;
+
+	if (!w->camera)
+		init_default_camera(w);
+
+	v2 p = ndc_to_screen(w, get_ndc_coord(project(v, w->camera)));
+
+	draw_point_v2(w, p);
+
+	//draw_filled_circle_v2(w, p, 5 * (projected.z + 1));
+}
+
+void draw_line_v3(window *w, v3 a, v3 b) {
+	if (!w)
+		return;
+
+	if (!w->camera)
+		init_default_camera(w);
+
+	v3 p1 = get_ndc_coord(project(a, w->camera)), p2 = get_ndc_coord(project(b, w->camera));
+
+	if (p1.x < -w->camera->ratio || p1.x > w->camera->ratio || p1.y < -1 || p1.y > 1 ||
+		p2.x < -w->camera->ratio || p2.x > w->camera->ratio || p2.y < -1 || p2.y > 1) {
+		return;
+	}
+
+	v2 pp1 = ndc_to_screen(w, p1), pp2 = ndc_to_screen(w, p2);
+
+	draw_line_v2(w, pp1, pp2);
+}
+
+void draw_wireframe_circle_v3(window *w, v3 center, double r) {
+	if (!w)
+		return;
+
+	if (!w->camera)
+		init_default_camera(w);
+
+	v3 top = { center.x, center.y + r, center.z };
+
+	v3 p1 = get_ndc_coord(project(center, w->camera)), p2 = get_ndc_coord(project(top, w->camera));
+
+	if (p1.x < -w->camera->ratio || p1.x > w->camera->ratio || p1.y < -1 || p1.y > 1 ||
+		p2.x < -w->camera->ratio || p2.x > w->camera->ratio || p2.y < -1 || p2.y > 1) {
+		return;
+	}
+
+	v2 pp1 = ndc_to_screen(w, p1), pp2 = ndc_to_screen(w, p2);
+
+	double nr = (pp2.x-pp1.x)*(pp2.x-pp1.x)+(pp2.y-pp1.y)*(pp2.y-pp1.y);
+
+	draw_wireframe_circle_v2(w, pp1, sqrt(nr));
+}
+
+void draw_filled_circle_v3(window *w, v3 center, double r) {
+	if (!w)
+		return;
+
+	if (!w->camera)
+		init_default_camera(w);
+
+	v3 top = { center.x, center.y + r, center.z };
+
+	v3 p1 = get_ndc_coord(project(center, w->camera)), p2 = get_ndc_coord(project(top, w->camera));
+
+	if (p1.x < -w->camera->ratio || p1.x > w->camera->ratio || p1.y < -1 || p1.y > 1 ||
+		p2.x < -w->camera->ratio || p2.x > w->camera->ratio || p2.y < -1 || p2.y > 1) {
+		return;
+	}
+
+	v2 pp1 = ndc_to_screen(w, p1), pp2 = ndc_to_screen(w, p2);
+
+	double nr = (pp2.x-pp1.x)*(pp2.x-pp1.x)+(pp2.y-pp1.y)*(pp2.y-pp1.y);
+
+	draw_filled_circle_v2(w, pp1, sqrt(nr));
+}
+
+void draw_wireframe_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3) {
+	if (!w)
+		return;
+
+	if (!w->camera)
+		init_default_camera(w);
+
+	v2 p1 = ndc_to_screen(w, get_ndc_coord(project(vt1, w->camera))),
+	   p2 = ndc_to_screen(w, get_ndc_coord(project(vt2, w->camera))),
+	   p3 = ndc_to_screen(w, get_ndc_coord(project(vt3, w->camera)));
+
+	draw_wireframe_triangle_v2(w, p1, p2, p3);
+}
+
+void draw_filled_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3) {
+	if (!w)
+		return;
+
+	if (!w->camera)
+		init_default_camera(w);
+
+	v2 p1 = ndc_to_screen(w, get_ndc_coord(project(vt1, w->camera))),
+	   p2 = ndc_to_screen(w, get_ndc_coord(project(vt2, w->camera))),
+	   p3 = ndc_to_screen(w, get_ndc_coord(project(vt3, w->camera)));
+
+	draw_filled_triangle_v2(w, p1, p2, p3);
+}
+
+void draw_wireframe_rectangle_v3(window *wd, v3 v, int w, int h) {
+	if (!wd)
+		return;
+
+	if (!wd->camera)
+		init_default_camera(wd);
+
+	v3 r = { v.x + w, v.y, v.z },
+	   b = { v.x, v.y + h, v.z };
+
+	v2 p1 = ndc_to_screen(wd, get_ndc_coord(project(v, wd->camera))),
+	   p2 = ndc_to_screen(wd, get_ndc_coord(project(r, wd->camera))),
+	   p3 = ndc_to_screen(wd, get_ndc_coord(project(b, wd->camera)));
+
+	// width
+	double ws = (p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y),
+		   hs = (p1.x-p3.x)*(p1.x-p3.x) + (p1.y-p3.y)*(p1.y-p3.y);
+
+	draw_wireframe_rectangle_v2(wd, p1, sqrt(ws), sqrt(hs));
+}
+
+void draw_filled_rectangle_v3(window *wd, v3 v, int w, int h) {
+	if (!wd)
+		return;
+
+	if (!wd->camera)
+		init_default_camera(wd);
+
+	v3 r = { v.x + w, v.y, v.z },
+	   b = { v.x, v.y + h, v.z };
+
+	v2 p1 = ndc_to_screen(wd, get_ndc_coord(project(v, wd->camera))),
+	   p2 = ndc_to_screen(wd, get_ndc_coord(project(r, wd->camera))),
+	   p3 = ndc_to_screen(wd, get_ndc_coord(project(b, wd->camera)));
+
+	// width
+	double ws = (p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y),
+		   hs = (p1.x-p3.x)*(p1.x-p3.x) + (p1.y-p3.y)*(p1.y-p3.y);
+
+	draw_filled_rectangle_v2(wd, p1, sqrt(ws), sqrt(hs));
+}
+
+void draw_wireframe_square_v3(window *w, v3 v, int l) {
+	draw_wireframe_rectangle_v3(w, v, l, l);
+}
+
+void draw_filled_square_v3(window *w, v3 v, int l) {
+	draw_filled_rectangle_v3(w, v, l, l);
+}
+
+void draw_mesh(window *w, mesh *m) {
+	if (!w)
+		return;
+
+	if (!m)
+		return;
+
+	for (int j = 0; j < m->F->length; j++) {
+		v3i f = *(v3i*) get_element(m->F, j);
+		v3 p1 = *(v3*) get_element(m->V, f.x1),
+		   p2 = *(v3*) get_element(m->V, f.x2),
+		   p3 = *(v3*) get_element(m->V, f.x3);
+
+		p1.z -= 2.5;
+		p2.z -= 2.5;
+		p3.z -= 2.5;
+
+		draw_wireframe_triangle_v3(w, p1, p2, p3);
 	}
 }
