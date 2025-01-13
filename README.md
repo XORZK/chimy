@@ -81,3 +81,7 @@ int main(void) {
 - `draw_wireframe_triangle(window *w, triangle *t)`: draws a triangle w/ vertices `t->vt1`, `t->vt2`, `t->vt3`.
 - `draw_wireframe_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3)`: draws a triangle w/ vertices `vt1`, `vt2`, `vt3`.
 - `draw_filled_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3)`: draws a filled triangle w/ vertices `vt1`, `vt2`, `vt3`.
+- `draw_wireframe_rectangle_v2(window *w, v2 v, int w, int h)`: draws a rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
+- `draw_filled_rectangle_v2(window *w, v2 v, int w, int h)`: draws a filled rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
+- `draw_wireframe_square_v2(window *w, v2 v, int l):` draws a square w/ length `l` and top left corner positioned at `v`.
+- `draw_filled_square_v2(window *w, v2 v, int l):` draws a filled square w/ length `l` and top left corner positioned at `v`.
