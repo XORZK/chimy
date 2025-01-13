@@ -12,7 +12,9 @@ A 3D software renderer built in C using SDL2.
 I wanted a more complete understanding of memory management, and low level programming. Start from the bottom and work my way up. I didn't want everything to be handed to me, and so instead of using pre-written libraries containing pre-written data structures and algorithms, I wrote 99% of the code utilized in the renderer myself.
 
 ## data structures
+- [avl.h](/src/avl.h): generic self-balancing binary search tree.
+- [bst.h](/src/bst.h): generic binary search tree.
 - [list.h](/src/list.h): generic, dynamic list structure that utilizes pointers to a `void*` array.
 - [ll.h](/src/ll.h): generic, linked list structure used for polygon triangulation.
+- [mat.h](/src/mat.h): represents matrices in $\mathbb{R}^{2 \times 2}$, $\mathbb{R}^{3 \times 3}$, and $\mathbb{R}^{4 \times 4}$ respectively.
 - [vec.h](/src/vec.h): represents vectors in $\mathbb{R}^2$, $\mathbb{R}^3$, and $\mathbb{R}^4$ respectively.
-- [mat.h](/src/mat.h): represents matrices in $\mathbb{R}^{2 \times 2}$, $\mathbb{R}^{3 \times 3}$, and $\mathbb{R}^{4 \times 4}$
