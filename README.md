@@ -72,6 +72,13 @@ int main(void) {
 
 ## structs and functions
 
+### `vec.h`
+```c
+typedef struct {
+	double x, y;
+} v2;
+```
+
 ### `window.h`
 - `set_color(window *w, int r, int g, int b):` sets the render color to (r,g,b).
 - `draw_point_v2(window *w, v2 v):` draws a 2D point at `v`.
