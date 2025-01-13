@@ -102,8 +102,14 @@ typedef struct {
 	int length, capacity;
 } list;
 ```
-- `list* init_list(int tsize, int c):` initializes a list that holds objects of size `tsize` with capacity `c`
-- `void set_l(list *l`
+- `list* init_list(int tsize, int c):` initializes a list that holds objects of size `tsize` with capacity `c`.
+- `void set_l(list *l, int idx, void *v):` set `l[idx] = v`.
+- `void push(list *l, void *v):` push `v` to the back of the list `l`.
+- `void delete(list *l, int idx):` deletes the object at `l[idx]` and resizes `l`.
+- `void* get_element(list *l, int idx):` returns a pointer to the object at `l[idx]`.
+- `void destroy_list(list *l):` frees the list `l`.
+- `list* sort(list *l, int (*cmp)(const void *, const void *)):` performs merge sort on `l` using comparator `cmp`.
+- `int binary_search(list *l, void *data, int (*cmp)(const void *, const void *)):` performs binary search for `data` on `l` using comparator `cmp`.
 
 
 ### `triangle.h`
