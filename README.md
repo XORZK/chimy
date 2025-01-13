@@ -136,6 +136,35 @@ typedef struct {
 - `void bst_delete(bst *tree, void *data):` deletes the node containing `data` in `tree`.
 - `void destroy_tree(bst *tree):` frees all nodes and the bst `tree`.
 
+### `avl.h`
+```c
+// avl tree: self balancing binary search tree
+// balance factor of node X
+// BF(X) = Height(X->Right) - Height(X->Left)
+// BF(X) < 0: Left Heavy
+// BF(X) > 0: Right Heavy
+// BF(X) = 0: Balanced
+typedef struct avl_node {
+	void *data;
+	struct avl_node *left;
+	struct avl_node *right;
+	struct avl_node *parent;
+	int height;
+	char balance_factor;
+} avl_node;
+```
+```c
+typedef struct {
+	avl_node *root;
+	int type_size;
+	int size;
+	int height;
+	int (*cmp)(const void *, const void *);
+	void (*prtf)(const void *);
+} avl_tree;
+
+```
+
 ### `triangle.h`
 ```c
 typedef struct {
