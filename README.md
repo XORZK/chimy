@@ -78,3 +78,4 @@ int main(void) {
 - `draw_line_v2(window *w, v2 p1, v2 p2)`: draws a line that connects `p1` and `p2`.
 - `draw_wireframe_circle_v2(window *w, v2 p, double r)`: draws a circle centered at `p` with radius `r`
 - `draw_filled_circle_v2(window *w, v2 p, double r)`: draws a filled circled centered at `p` with radius `r`
+- `draw_wireframe_triangle(window *w, triangle *t)`: draws a triangle with vertices `t->vt1`, `t->vt2`, `t->vt3`
