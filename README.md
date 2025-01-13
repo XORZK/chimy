@@ -94,6 +94,28 @@ typedef struct {
 } v3i;
 ```
 
+### `triangle.h`
+```c
+typedef struct {
+	v2 vt1;
+	v2 vt2;
+	v2 vt3;
+} triangle;
+```
+
+### `polygon.h`
+```c
+// vertices
+// edges connecting vertices
+// edges: (v_j, v_k) connects vertex j to vertex k
+typedef struct {
+	int64_t vertex_count, edge_count;
+	v2 centroid;
+	list *vertices, *edges;
+} polygon;
+```
+
+
 ### `window.h`
 - `set_color(window *w, int r, int g, int b):` sets the render color to (r,g,b).
 - `draw_point_v2(window *w, v2 v):` draws a 2D point at `v`.
