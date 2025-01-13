@@ -41,6 +41,7 @@ int main(void) {
 	set_bg_color(w, 0x00, 0x00, 0x00);
 	set_color(w, 0xFF, 0x00, 0x00); // set draw color to red
 
+	// vertices of the triangle
 	v2 p1 = { 100, 100 },
 	   p2 = { 200, 200 },
 	   p3 = { 400, 300 };
@@ -59,6 +60,7 @@ int main(void) {
 			}
 		}
 
+		// draws a (non-filled) triangle
 		draw_wireframe_triangle_v2(w, p1, p2, p3);
 
 		output_screen(w);
@@ -68,4 +70,4 @@ int main(void) {
 }
 ```
 
-## features (important functionality)
+## features
