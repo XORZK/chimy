@@ -6,7 +6,7 @@
 - Polygon Triangulation [ DONE ]
 	- Very simple
 	- Visualization program could use some work
-- Perspective Projection
+- Perspective Projection [DONE]
 - Bezier Curves
 - Vertex Transformations:
 	- Translation, Rotation, Scaling
