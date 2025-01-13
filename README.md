@@ -20,3 +20,6 @@ I wanted a more complete understanding of memory management, and low level progr
 - [mat.h](/src/mat.h): represents matrices in $\mathbb{R}^{2 \times 2}$, $\mathbb{R}^{3 \times 3}$, and $\mathbb{R}^{4 \times 4}$ respectively.
 - [queue.h](/src/queue.h): generic queue data structure, used primarily in the Bentley-Ottmann algorithm.
 - [vec.h](/src/vec.h): represents vectors in $\mathbb{R}^2$, $\mathbb{R}^3$, and $\mathbb{R}^4$ respectively.
+
+## polygon triangulation demo
+[<img src="https://raw.githubusercontent.com/XORZK/chimy/refs/heads/main/img/triangulation_thumbnail.png" width="50%">](https://raw.githubusercontent.com/XORZK/chimy/refs/heads/main/img/triangulation_demo.mov)
