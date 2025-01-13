@@ -70,4 +70,9 @@ int main(void) {
 }
 ```
 
-## features
+## functions
+
+### `window.h`
+- `set_color(window *w, int r, int g, int b)`: sets the render color to (r,g,b).
+- `draw_point_v2(window *w, v2 v)`: draws a 2D point.
+- `draw_line_v2(window *w, v2 p1, v2 p2)`: draws a line that connects `p1` and `p2`.
