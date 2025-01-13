@@ -79,6 +79,24 @@ typedef struct {
 } v2;
 ```
 
+```c
+typedef struct {
+	double x, y, z;
+} v3;
+```
+
+```c
+typedef struct {
+	double x1, x2, x3, x4;
+} v4;
+```
+
+```c
+typedef struct {
+	int x1, x2, x3;
+} v3i;
+```
+
 ### `window.h`
 - `set_color(window *w, int r, int g, int b):` sets the render color to (r,g,b).
 - `draw_point_v2(window *w, v2 v):` draws a 2D point at `v`.
