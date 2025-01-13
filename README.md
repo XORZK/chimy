@@ -78,19 +78,16 @@ typedef struct {
 	double x, y;
 } v2;
 ```
-
 ```c
 typedef struct {
 	double x, y, z;
 } v3;
 ```
-
 ```c
 typedef struct {
 	double x1, x2, x3, x4;
 } v4;
 ```
-
 ```c
 typedef struct {
 	int x1, x2, x3;
