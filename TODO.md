@@ -52,6 +52,3 @@
 - Simple O(n^2) polygon triangulation
 	- Working on a visualizer
 
-0.525731 0.000 -0.850651
-0.000000 0.850651 0.525731
-(-0.525731,0.000000,-0.850651)
