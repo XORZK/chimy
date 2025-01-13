@@ -467,7 +467,7 @@ void draw_mesh(window *w, mesh *m) {
 		return;
 
 	for (int j = 0; j < m->F->length; j++) {
-		v3i f = *(v3i*) get_element(m->F, j);
+		v3i f = *(v3i*) get_element(m->F, m->F->length-1-j);
 
 		v3 vt1 = *(v3*) get_element(m->V, f.x1),
 		   vt2 = *(v3*) get_element(m->V, f.x2),
@@ -481,12 +481,16 @@ void draw_mesh(window *w, mesh *m) {
 		v3 e1 = { vt1.x - vt2.x, vt1.y - vt2.y, vt1.z - vt2.z },
 		   e2 = { vt3.x - vt2.x, vt3.y - vt2.y, vt3.z - vt2.z };
 
+
 		v3 n = cross(e1, e2);
 
-		// printf("COORDS: \n");
-		// printf("(%.3f, %.3f, %.3f)\n", vt1.x, vt1.y, vt1.z);
-		// printf("(%.3f, %.3f, %.3f)\n", vt2.x, vt2.y, vt2.z);
-		// printf("(%.3f, %.3f, %.3f)\n", vt3.x, vt3.y, vt3.z);
+		printf("COORDS: \n");
+		printf("vt1: (%.3f, %.3f, %.3f)\n", vt1.x, vt1.y, vt1.z);
+		printf("vt2: (%.3f, %.3f, %.3f)\n", vt2.x, vt2.y, vt2.z);
+		printf("vt3: (%.3f, %.3f, %.3f)\n", vt3.x, vt3.y, vt3.z);
+		printf("e1: (%.3f, %.3f, %.3f)\n", e1.x, e1.y, e1.z);
+		printf("e2: (%.3f, %.3f, %.3f)\n", e2.x, e2.y, e2.z);
+		printf("n: (%.3f, %.3f, %.3f)\n", n.x, n.y, n.z);
 
 		// n.x += vt2.x;
 		// n.y += vt2.y;
@@ -502,14 +506,15 @@ void draw_mesh(window *w, mesh *m) {
 		v3 ne = { p2->x + n.x, p2->y + n.y, p2->z + n.z };
 
 		// draw normal
-		set_color(w, 0x00, 0xFF, 0x00);
-		draw_line_v3(w, *p2, ne);
+		//set_color(w, 0x00, 0xFF, 0x00);
+		//draw_line_v3(w, *p2, ne);
 
 		double cos = dot(&w->light_source->pos, &n, 3);
+		printf("%.3f\n", cos);
 
+		//set_color(w, cos*0xFF, 0x00, 0x00);
+		//draw_filled_triangle_v3(w, *p1, *p2, *p3);
 		set_color(w, 0xFF, 0x00, 0x00);
-		draw_filled_triangle_v3(w, *p1, *p2, *p3);
-		set_color(w, 0x00, 0x00, 0x00);
 		draw_wireframe_triangle_v3(w, *p1, *p2, *p3);
 
 		free(p1);
