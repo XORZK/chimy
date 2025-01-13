@@ -70,7 +70,7 @@ int main(void) {
 }
 ```
 
-## functions
+## structs and functions
 
 ### `window.h`
 - `set_color(window *w, int r, int g, int b)`: sets the render color to (r,g,b).
