@@ -73,16 +73,17 @@ int main(void) {
 ## structs and functions
 
 ### `window.h`
-- `set_color(window *w, int r, int g, int b)`: sets the render color to (r,g,b).
-- `draw_point_v2(window *w, v2 v)`: draws a 2D point at `v`.
-- `draw_line_v2(window *w, v2 p1, v2 p2)`: draws a line that connects `p1` and `p2`.
-- `draw_wireframe_circle_v2(window *w, v2 p, double r)`: draws a circle centered at `p` with radius `r`.
-- `draw_filled_circle_v2(window *w, v2 p, double r)`: draws a filled circled centered at `p` with radius `r`.
-- `draw_wireframe_triangle(window *w, triangle *t)`: draws a triangle w/ vertices `t->vt1`, `t->vt2`, `t->vt3`.
-- `draw_wireframe_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3)`: draws a triangle w/ vertices `vt1`, `vt2`, `vt3`.
-- `draw_filled_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3)`: draws a filled triangle w/ vertices `vt1`, `vt2`, `vt3`.
-- `draw_wireframe_rectangle_v2(window *w, v2 v, int w, int h)`: draws a rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
-- `draw_filled_rectangle_v2(window *w, v2 v, int w, int h)`: draws a filled rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
+- `set_color(window *w, int r, int g, int b):` sets the render color to (r,g,b).
+- `draw_point_v2(window *w, v2 v):` draws a 2D point at `v`.
+- `draw_line_v2(window *w, v2 p1, v2 p2):` draws a line that connects `p1` and `p2`.
+- `draw_wireframe_circle_v2(window *w, v2 p, double r):` draws a circle centered at `p` with radius `r`.
+- `draw_filled_circle_v2(window *w, v2 p, double r):` draws a filled circled centered at `p` with radius `r`.
+- `draw_wireframe_triangle(window *w, triangle *t):` draws a triangle w/ vertices `t->vt1`, `t->vt2`, `t->vt3`.
+- `draw_wireframe_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3):` draws a triangle w/ vertices `vt1`, `vt2`, `vt3`.
+- `draw_filled_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3):` draws a filled triangle w/ vertices `vt1`, `vt2`, `vt3`.
+- `draw_wireframe_rectangle_v2(window *w, v2 v, int w, int h):` draws a rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
+- `draw_filled_rectangle_v2(window *w, v2 v, int w, int h):` draws a filled rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
 - `draw_wireframe_square_v2(window *w, v2 v, int l):` draws a square w/ length `l` and top left corner positioned at `v`.
 - `draw_filled_square_v2(window *w, v2 v, int l):` draws a filled square w/ length `l` and top left corner positioned at `v`.
 - `draw_wireframe_polygon(window *w, polygon *p):` draws a polygon defined by `p`.
+- `draw_point_v3(window *w, v3 v):`
