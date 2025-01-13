@@ -22,7 +22,5 @@ I wanted a more complete understanding of memory management, and low level progr
 - [vec.h](/src/vec.h): represents vectors in $\mathbb{R}^2$, $\mathbb{R}^3$, and $\mathbb{R}^4$ respectively.
 
 ## polygon triangulation demo
-<p align="center" width="100%">
-	<video width="100%" src="https://raw.githubusercontent.com/XORZK/chimy/refs/heads/main/img/triangulation_demo.mp4"> </video>
-</p>
+![triangulation gif](https://raw.githubusercontent.com/XORZK/chimy/refs/heads/main/img/triangulation_demo.gif)
 
