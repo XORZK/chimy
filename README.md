@@ -111,6 +111,30 @@ typedef struct {
 - `list* sort(list *l, int (*cmp)(const void *, const void *)):` performs merge sort on `l` using comparator `cmp`.
 - `int binary_search(list *l, void *data, int (*cmp)(const void *, const void *)):` performs binary search for `data` on `l` using comparator `cmp`.
 
+### `bst.h`
+```c
+// generic bst
+// need comparator off the bat.
+typedef struct bst_node {
+	void *data;
+	struct bst_node *left;
+	struct bst_node *right;
+} bst_node;
+```
+```c
+typedef struct {
+	bst_node *root;
+	int type_size;
+	int size;
+	int (*cmp) (const void *, const void *);
+} bst;
+```
+- `bst_node* create_bst_node(void *v, int tsize):` initializes a bst node containing `v` of size `tsize`.
+- `bst* init_bst(int tsize, int (*cmp)(const void *, const void *)):` initializes a binary search tree that uses comparator `cmp` and holds objects of size `tsize`.
+- `void bst_insert(bst *tree, void *data):` inserts `data` into the bst `tree`.
+- `bst_node* bst_search(bst *tree, void *data):` searches for `data` in `tree` (returns `NULL` if `data` can't be found).
+- `void bst_delete(bst *tree, void *data):` deletes the node containing `data` in `tree`.
+- `void destroy_tree(bst *tree):` frees all nodes and the bst `tree`.
 
 ### `triangle.h`
 ```c
