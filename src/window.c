@@ -467,7 +467,7 @@ void draw_mesh(window *w, mesh *m) {
 		return;
 
 	for (int j = 0; j < m->F->length; j++) {
-		v3i f = *(v3i*) get_element(m->F, m->F->length - 1 - j);
+		v3i f = *(v3i*) get_element(m->F, j);
 
 		v3 vt1 = *(v3*) get_element(m->V, f.x1),
 		   vt2 = *(v3*) get_element(m->V, f.x2),
@@ -507,12 +507,10 @@ void draw_mesh(window *w, mesh *m) {
 
 		double cos = dot(&w->light_source->pos, &n, 3);
 
-		// printf("COS: %.3f\n", cos);
-
 		set_color(w, 0xFF, 0x00, 0x00);
 		draw_filled_triangle_v3(w, *p1, *p2, *p3);
-		//set_color(w, 0x00, 0x00, 0x00);
-		//draw_wireframe_triangle_v3(w, *p1, *p2, *p3);
+		set_color(w, 0x00, 0x00, 0x00);
+		draw_wireframe_triangle_v3(w, *p1, *p2, *p3);
 
 		free(p1);
 		free(p2);
