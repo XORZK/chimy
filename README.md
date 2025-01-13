@@ -115,6 +115,12 @@ typedef struct {
 } polygon;
 ```
 
+### `mesh.h`
+```c
+typedef struct mesh {
+	list *F, *V;
+} mesh;
+```
 
 ### `window.h`
 - `set_color(window *w, int r, int g, int b):` sets the render color to (r,g,b).
