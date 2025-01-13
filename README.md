@@ -12,3 +12,4 @@ A 3D software renderer built in C using SDL2.
 I wanted a more complete understanding of memory management, and low level programming. Start from the bottom and work my way up. I didn't want everything to be handed to me, and so instead of using pre-written libraries containing pre-written data structures and algorithms, I wrote 99% of the code utilized in the renderer myself.
 
 ## data structures
+- [list.h](/src/list.h): generic, dynamic list structure that utilizes pointers to a `void**` array.
