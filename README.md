@@ -79,3 +79,5 @@ int main(void) {
 - `draw_wireframe_circle_v2(window *w, v2 p, double r)`: draws a circle centered at `p` with radius `r`.
 - `draw_filled_circle_v2(window *w, v2 p, double r)`: draws a filled circled centered at `p` with radius `r`.
 - `draw_wireframe_triangle(window *w, triangle *t)`: draws a triangle w/ vertices `t->vt1`, `t->vt2`, `t->vt3`.
+- `draw_wireframe_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3)`: draws a triangle w/ vertices `vt1`, `vt2`, `vt3`.
+- `draw_filled_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3)`: draws a filled triangle w/ vertices `vt1`, `vt2`, `vt3`.
