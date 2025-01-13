@@ -77,3 +77,4 @@ int main(void) {
 - `draw_point_v2(window *w, v2 v)`: draws a 2D point at `v`.
 - `draw_line_v2(window *w, v2 p1, v2 p2)`: draws a line that connects `p1` and `p2`.
 - `draw_wireframe_circle_v2(window *w, v2 p, double r)`: draws a circle centered at `p` with radius `r`
+- `draw_filled_circle_v2(window *w, v2 p, double r)`: draws a filled circled centered at `p` with radius `r`
