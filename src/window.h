@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include "camera.h"
 #include "color.h"
+#include "light.h"
 #include "triangle.h"
 #include "mesh.h"
 #include "polygon.h"
@@ -21,6 +22,7 @@ typedef struct {
 	color *color, *bg_color;
 	const char* title;
 	cam *camera;
+	light *light_source;
 } window;
 
 window* init_window(const char* title, int width, int height);

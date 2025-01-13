@@ -1,7 +1,7 @@
 #include "convex_hull.h"
 #include "vec.h"
 
-double cross(v2 p, v2 q, v2 r) {
+double cross_v2(v2 p, v2 q, v2 r) {
 	double v = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
 
 	return v;
@@ -30,7 +30,7 @@ list* gift_wrapping(list* points) {
 
 		for (int j = 0; j < points->length; j++) {
 			v2 r = *(v2*) get_element(points, j);
-			if ((q.x == curr.x && q.y == curr.y) || cross(curr, q, r) > 0)
+			if ((q.x == curr.x && q.y == curr.y) || cross_v2(curr, q, r) > 0)
 				q = r;
 		}
 

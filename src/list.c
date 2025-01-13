@@ -145,6 +145,24 @@ list* sort(list *l, int (*cmp)(const void *, const void *)) {
 	return s;
 }
 
+void swap_list(list *l, int j, int k) {
+	if (!l)
+		return;
+
+	if (j < 0 || j >= l->length || k < 0 || k >= l->length)
+		return;
+
+	void *a = (void*) malloc(l->type_size);
+	void *b = get_element(l, k);
+
+	memcpy(a, l->data + j * l->type_size, l->type_size);
+
+	set_l(l, j, b);
+	set_l(l, k, a);
+
+	free(a);
+}
+
 int binary_search(list *l, void *data, int (*cmp)(const void *, const void *)) {
 	int s = 0, e = l->length-1;
 

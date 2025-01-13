@@ -28,6 +28,8 @@ list* copy_list(list *l);
 
 list* sort(list *l, int (*cmp)(const void *, const void *));
 
+void swap_list(list *l, int j, int k);
+
 int binary_search(list *l, void *data, int (*cmp)(const void *, const void *));
 
 #endif

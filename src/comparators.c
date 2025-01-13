@@ -1,9 +1,9 @@
 #include "comparators.h"
-#include "vec.h"
 #include "segment.h"
 #include "tuple.h"
 
 #include <math.h>
+#include <stdbool.h>
 
 int cmp_double(const void *a, const void *b) {
 	double d1 = *(double*) a, d2 = *(double*) b;
@@ -132,4 +132,30 @@ int search_second_x(const void *a, const void *b) {
 	double px = *(double*) b;
 
 	return cmp_double(&segment.p2.x, &px);
+}
+
+bool is_cw_v3(v3 a, v3 b, v3 c) {
+	if (a.x >= c.x && b.x < c.x) return 1;
+	if (a.x < c.x && b.x >= c.x) return 0;
+
+	if (a.x == c.x && b.x == c.x) {
+		return ((a.y >= c.y || b.y >= c.y) ? (a.y > b.y) : (b.y > a.y));
+	}
+
+	// v1 = a - c, v2 = b - c
+	// return (v1.x() * v2.y()) - (v2.x() * v1.y());
+
+	double d = ((a.x-c.x)*(b.y-c.y)) - ((b.x-c.x)*(a.y-c.y));
+
+	if (d < 0) return 1;
+	else if (d > 0) return 0;
+	else {
+	}
+
+	return ((d < 0) ? 1 : (d > 0) ? 0 :
+		   ((a.x-c.x)*(a.x-c.x)+(a.y-c.y)*(a.y-c.y)) > ((b.x-c.x)*(b.x-c.x)+(b.y-c.y)*(b.y-c.y)));
+}
+
+bool is_ccw_v3(v3 a, v3 b, v3 c) {
+	return !is_cw_v3(a,b,c);
 }

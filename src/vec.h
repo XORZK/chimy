@@ -51,4 +51,6 @@ void swap_v2(v2 *a, v2 *b);
 
 double dist_v2(v2 *a, v2 *b);
 
+v3 cross(v3 a, v3 b);
+
 #endif

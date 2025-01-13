@@ -41,6 +41,7 @@ window* init_window(const char* title, int width, int height) {
 	w->title = title;
 	w->quit = false;
 	w->delay = RENDERER_DELAY;
+	w->light_source = init_light();
 	init_default_camera(w);
 
 	return w;
@@ -466,12 +467,52 @@ void draw_mesh(window *w, mesh *m) {
 		return;
 
 	for (int j = 0; j < m->F->length; j++) {
-		v3i f = *(v3i*) get_element(m->F, j);
-		v3 *p1 = (v3*) sub_v(get_element(m->V, f.x1), &w->camera->pos, 3),
-		   *p2 = (v3*) sub_v(get_element(m->V, f.x2), &w->camera->pos, 3),
-		   *p3 = (v3*) sub_v(get_element(m->V, f.x3), &w->camera->pos, 3);
+		v3i f = *(v3i*) get_element(m->F, m->F->length - 1 - j);
 
-		draw_wireframe_triangle_v3(w, *p1, *p2, *p3);
+		v3 vt1 = *(v3*) get_element(m->V, f.x1),
+		   vt2 = *(v3*) get_element(m->V, f.x2),
+		   vt3 = *(v3*) get_element(m->V, f.x3);
+
+		v3 *p1 = (v3*) sub_v(&vt1, &w->camera->pos, 3),
+		   *p2 = (v3*) sub_v(&vt2, &w->camera->pos, 3),
+		   *p3 = (v3*) sub_v(&vt3, &w->camera->pos, 3);
+
+		// lighting
+		v3 e1 = { vt1.x - vt2.x, vt1.y - vt2.y, vt1.z - vt2.z },
+		   e2 = { vt3.x - vt2.x, vt3.y - vt2.y, vt3.z - vt2.z };
+
+		v3 n = cross(e1, e2);
+
+		// printf("COORDS: \n");
+		// printf("(%.3f, %.3f, %.3f)\n", vt1.x, vt1.y, vt1.z);
+		// printf("(%.3f, %.3f, %.3f)\n", vt2.x, vt2.y, vt2.z);
+		// printf("(%.3f, %.3f, %.3f)\n", vt3.x, vt3.y, vt3.z);
+
+		// n.x += vt2.x;
+		// n.y += vt2.y;
+		// n.z += vt2.z;
+
+		// normalize n
+		double nm = sqrt((n.x*n.x)+(n.y*n.y)+(n.z*n.z));
+
+		n.x /= nm;
+		n.y /= nm;
+		n.z /= nm;
+
+		v3 ne = { p2->x + n.x, p2->y + n.y, p2->z + n.z };
+
+		// draw normal
+		set_color(w, 0x00, 0xFF, 0x00);
+		draw_line_v3(w, *p2, ne);
+
+		double cos = dot(&w->light_source->pos, &n, 3);
+
+		// printf("COS: %.3f\n", cos);
+
+		set_color(w, 0xFF, 0x00, 0x00);
+		draw_filled_triangle_v3(w, *p1, *p2, *p3);
+		//set_color(w, 0x00, 0x00, 0x00);
+		//draw_wireframe_triangle_v3(w, *p1, *p2, *p3);
 
 		free(p1);
 		free(p2);

@@ -238,3 +238,11 @@ double dist_v2(v2 *a, v2 *b) {
 	return sqrt((a->x - b->x) * (a->x - b->x) +
 				(a->y - b->y) * (a->y - b->y));
 }
+
+v3 cross(v3 a, v3 b) {
+	v3 c = { a.y * b.z - a.z * b.y,
+			 a.z * b.x - a.x * b.z,
+			 a.x * b.y - a.y * b.x };
+
+	return c;
+}
