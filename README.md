@@ -85,3 +85,4 @@ int main(void) {
 - `draw_filled_rectangle_v2(window *w, v2 v, int w, int h)`: draws a filled rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
 - `draw_wireframe_square_v2(window *w, v2 v, int l):` draws a square w/ length `l` and top left corner positioned at `v`.
 - `draw_filled_square_v2(window *w, v2 v, int l):` draws a filled square w/ length `l` and top left corner positioned at `v`.
+- `draw_wireframe_polygon(window *w, polygon *p):` draws a polygon defined by `p`.
