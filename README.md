@@ -25,6 +25,6 @@ I wanted a more complete understanding of memory management, and low level progr
 polygon triangulation is one of 
 <p align="center">
   <img src="https://raw.githubusercontent.com/XORZK/chimy/refs/heads/main/img/triangulation_demo.gif" alt="triangulation demo">
-  polygon triangulation simulation
+  <p> polygon triangulation simulation</p>
 </p>
 
