@@ -102,6 +102,8 @@ typedef struct {
 	int length, capacity;
 } list;
 ```
+- `list* init_list(int tsize, int c):` initializes a list that holds objects of size `tsize` with capacity `c`
+- `void set_l(list *l`
 
 
 ### `triangle.h`
@@ -133,27 +135,27 @@ typedef struct mesh {
 ```
 
 ### `window.h`
-- `set_color(window *w, int r, int g, int b):` sets the render color to (r,g,b).
-- `draw_point_v2(window *w, v2 v):` draws a 2D point at `v`.
-- `draw_line_v2(window *w, v2 p1, v2 p2):` draws a line that connects `p1` and `p2`.
-- `draw_wireframe_circle_v2(window *w, v2 p, double r):` draws a circle centered at `p` with radius `r`.
-- `draw_filled_circle_v2(window *w, v2 p, double r):` draws a filled circled centered at `p` with radius `r`.
-- `draw_wireframe_triangle(window *w, triangle *t):` draws a triangle w/ vertices `t->vt1`, `t->vt2`, `t->vt3`.
-- `draw_wireframe_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3):` draws a triangle w/ vertices `vt1`, `vt2`, `vt3`.
-- `draw_filled_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3):` draws a filled triangle w/ vertices `vt1`, `vt2`, `vt3`.
-- `draw_wireframe_rectangle_v2(window *w, v2 v, int w, int h):` draws a rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
-- `draw_filled_rectangle_v2(window *w, v2 v, int w, int h):` draws a filled rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
-- `draw_wireframe_square_v2(window *w, v2 v, int l):` draws a square w/ length `l` and top left corner positioned at `v`.
-- `draw_filled_square_v2(window *w, v2 v, int l):` draws a filled square w/ length `l` and top left corner positioned at `v`.
-- `draw_wireframe_polygon(window *w, polygon *p):` draws a polygon defined by `p`.
-- `draw_point_v3(window *w, v3 v):` draws the 3D point at `v`.
-- `draw_line_v3(window *w, v3 p1, v3 p2):` draws a line that connects `p1` and `p2` in 3D.
-- `draw_wireframe_circle_v3(window *w, v3 p, double r):` draws a circle in 3D centered at `p` with radius `r`.
-- `draw_filled_circle_v3(window *w, v3 p, double r):` draws a filled circle in 3D centered at `p` with radius `r`.
-- `draw_wireframe_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3):` draws a triangle in 3D defined by vertices `vt1`, `vt2`, and `vt3`.
-- `draw_filled_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3):` draws a filled triangle in 3D defined by vertices `vt1`, `vt2`, and `vt3`.
-- `draw_wireframe_rectangle_v3(window *w, v3 v, int w, int h):` draws a rectangle in 3D with top left corner at `v`, width `w` and height `h`.
-- `draw_filled_rectangle_v3(window *w, v3 v, int w, int h):` draws a filled rectangle in 3D with top left corner at `v`, width `w` and height `h`.
-- `draw_wireframe_square_v3(window *w, v3 v, int l):` draws a square in 3D with top left corner at `v`, and length `l`.
-- `draw_filled_square_v3(window *w, v3 v, int l):` draws a filled square in 3D with top left corner at `v` and length `l`.
-- `draw_mesh(window *w, mesh *m):` draws a 3D mesh defined by `m`.
+- `void set_color(window *w, int r, int g, int b):` sets the render color to (r,g,b).
+- `void draw_point_v2(window *w, v2 v):` draws a 2D point at `v`.
+- `void draw_line_v2(window *w, v2 p1, v2 p2):` draws a line that connects `p1` and `p2`.
+- `void draw_wireframe_circle_v2(window *w, v2 p, double r):` draws a circle centered at `p` with radius `r`.
+- `void draw_filled_circle_v2(window *w, v2 p, double r):` draws a filled circled centered at `p` with radius `r`.
+- `void draw_wireframe_triangle(window *w, triangle *t):` draws a triangle w/ vertices `t->vt1`, `t->vt2`, `t->vt3`.
+- `void draw_wireframe_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3):` draws a triangle w/ vertices `vt1`, `vt2`, `vt3`.
+- `void draw_filled_triangle_v2(window *w, v2 vt1, v2 vt2, v2 vt3):` draws a filled triangle w/ vertices `vt1`, `vt2`, `vt3`.
+- `void draw_wireframe_rectangle_v2(window *w, v2 v, int w, int h):` draws a rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
+- `void draw_filled_rectangle_v2(window *w, v2 v, int w, int h):` draws a filled rectangle w/ width `w` and height `h`, top left corner positioned at `v`.
+- `void draw_wireframe_square_v2(window *w, v2 v, int l):` draws a square w/ length `l` and top left corner positioned at `v`.
+- `void draw_filled_square_v2(window *w, v2 v, int l):` draws a filled square w/ length `l` and top left corner positioned at `v`.
+- `void draw_wireframe_polygon(window *w, polygon *p):` draws a polygon defined by `p`.
+- `void draw_point_v3(window *w, v3 v):` draws the 3D point at `v`.
+- `void draw_line_v3(window *w, v3 p1, v3 p2):` draws a line that connects `p1` and `p2` in 3D.
+- `void draw_wireframe_circle_v3(window *w, v3 p, double r):` draws a circle in 3D centered at `p` with radius `r`.
+- `void draw_filled_circle_v3(window *w, v3 p, double r):` draws a filled circle in 3D centered at `p` with radius `r`.
+- `void draw_wireframe_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3):` draws a triangle in 3D defined by vertices `vt1`, `vt2`, and `vt3`.
+- `void draw_filled_triangle_v3(window *w, v3 vt1, v3 vt2, v3 vt3):` draws a filled triangle in 3D defined by vertices `vt1`, `vt2`, and `vt3`.
+- `void draw_wireframe_rectangle_v3(window *w, v3 v, int w, int h):` draws a rectangle in 3D with top left corner at `v`, width `w` and height `h`.
+- `void draw_filled_rectangle_v3(window *w, v3 v, int w, int h):` draws a filled rectangle in 3D with top left corner at `v`, width `w` and height `h`.
+- `void draw_wireframe_square_v3(window *w, v3 v, int l):` draws a square in 3D with top left corner at `v`, and length `l`.
+- `void draw_filled_square_v3(window *w, v3 v, int l):` draws a filled square in 3D with top left corner at `v` and length `l`.
+- `void draw_mesh(window *w, mesh *m):` draws a 3D mesh defined by `m`.
