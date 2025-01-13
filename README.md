@@ -74,5 +74,6 @@ int main(void) {
 
 ### `window.h`
 - `set_color(window *w, int r, int g, int b)`: sets the render color to (r,g,b).
-- `draw_point_v2(window *w, v2 v)`: draws a 2D point.
+- `draw_point_v2(window *w, v2 v)`: draws a 2D point at `v`.
 - `draw_line_v2(window *w, v2 p1, v2 p2)`: draws a line that connects `p1` and `p2`.
+- `draw_wireframe_circle_v2(window *w, v2 p, double r)`: draws a circle centered at `p` with radius `r`
