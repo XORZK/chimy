@@ -21,9 +21,10 @@ I wanted a more complete understanding of memory management, and low level progr
 - [queue.h](/src/queue.h): generic queue data structure, used primarily in the Bentley-Ottmann algorithm.
 - [vec.h](/src/vec.h): represents vectors in $\mathbb{R}^2$, $\mathbb{R}^3$, and $\mathbb{R}^4$ respectively.
 
-## polygon triangulation demo
+## polygon triangulation
+polygon triangulation is one of 
 <p align="center">
-
   <img src="https://raw.githubusercontent.com/XORZK/chimy/refs/heads/main/img/triangulation_demo.gif" alt="triangulation demo"/>
+  polygon triangulation simulation
 </p>
 
