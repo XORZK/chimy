@@ -22,10 +22,11 @@ I wanted a more complete understanding of memory management, and low level progr
 - [vec.h](/src/vec.h): represents vectors in $\mathbb{R}^2$, $\mathbb{R}^3$, and $\mathbb{R}^4$ respectively.
 
 ## polygon triangulation
-polygon triangulation is one of 
+Polygon triangulation is one of the most vital parts of this program in my opinion. Decomposing polygons into simpler triangles, which makes a lot of operations much simpler, such as drawing meshes composed of thousands of polygons.
 <p align="center">
   <img src="https://raw.githubusercontent.com/XORZK/chimy/refs/heads/main/img/triangulation_demo.gif" alt="triangulation demo">
   <br>
   polygon triangulation simulation
 </p>
 
+## features
