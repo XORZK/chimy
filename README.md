@@ -94,6 +94,16 @@ typedef struct {
 } v3i;
 ```
 
+### `list.h`
+```c
+typedef struct {
+	void* data;
+	int type_size;
+	int length, capacity;
+} list;
+```
+
+
 ### `triangle.h`
 ```c
 typedef struct {
